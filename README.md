@@ -130,12 +130,12 @@ BECA21F0-8B5E-4877-A18A-FD2A4B04322D|4DC0C4A6-893C-4246-AF80-B990EDD10C54|0.0112
     stage2|7.110673135|23451
     ...
 
-- 이 Hadoop 분석 결과를 Power BI를 이용해 손쉬운 시각화 및 Web에 배포가 가능(Power BI 관련 구성은 26번 항목 참조)  
+- 이 Hadoop 분석 결과를 Power BI를 이용해 손쉬운 시각화 및 Web에 배포가 가능  
 - ![Power BI 데이터 시각화](demo/hdinsight/images/27-1.png)  
 
 이 외에도 다양한 Hadoop 분석 시나리오를 도출 가능  
 - 주요 부동산 매물들의 조회량 변화 추이  
 - Feature별 주요한 group된 부동산 정보  
 
-등의 다양한 log를 활용한 시나리오를 CloudBread의 저장소와 Hadoop - Big data 분석 가능  
+등의 다양한 log를 활용한 시나리오를 저장소와 Hadoop - Big data 분석 가능  
 
