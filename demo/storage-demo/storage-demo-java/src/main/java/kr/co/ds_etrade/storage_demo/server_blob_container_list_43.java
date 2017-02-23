@@ -10,8 +10,8 @@ public class server_blob_container_list_43 {
 
 	// Define the connection-string with your values
 	public static final String storageConnectionString = "DefaultEndpointsProtocol=https;"
-			+ "AccountName=function0aa4a8eb8e79;"
-			+ "AccountKey=gOGficJJTX9ehKDPp0b5YICDM/Jr23WJXyg44ZazqCW2xGlX0e+GSUwcX4MIrdKqFkGFFOTICWRgjLfGJsxt8w==";
+			+ "AccountName=<account_name>;"
+			+ "AccountKey=<account_key>";
 
 	public static void main(String[] args) throws Exception {
 

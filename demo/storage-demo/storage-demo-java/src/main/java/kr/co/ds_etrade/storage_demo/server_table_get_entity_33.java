@@ -14,8 +14,8 @@ public class server_table_get_entity_33 {
 
 	// Define the connection-string with your values
 	public static final String storageConnectionString = "DefaultEndpointsProtocol=https;"
-			+ "AccountName=function0aa4a8eb8e79;"
-			+ "AccountKey=gOGficJJTX9ehKDPp0b5YICDM/Jr23WJXyg44ZazqCW2xGlX0e+GSUwcX4MIrdKqFkGFFOTICWRgjLfGJsxt8w==";
+			+ "AccountName=<account_name>;"
+			+ "AccountKey=<account_key>";
 
 	public static void main(String[] args) throws Exception {
 
