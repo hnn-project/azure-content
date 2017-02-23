@@ -1,7 +1,8 @@
 #Java에서 Blob 저장소를 사용하는 방법
 샘플은 Java로 작성되었으며 Java용 Azure Storage SDK(영문)를 사용합니다.
 여기서 다루는 시나리오에는 Blob 업로드, 나열, 다운로드 및 삭제가 포함됩니다.
-샘플소스위치: azure-content/demo/storage-demo/storage-demo-java/src/main/java/kr/co/ds_etrade/storage_demo/
+ - 샘플소스: azure-content/demo/storage-demo/storage-demo-java/src/main/java/kr/co/ds_etrade/storage_demo/
+
 
 ## 1. 컨테이너 만들기
 CloudBlobClient 개체를 사용하면 컨테이너 및 Blob에 대한 참조 개체를 가져올 수 있습니다.
