@@ -3,6 +3,8 @@
 
 ## Azure storage SDK 코드
 Hackfest에 필요한 storage에 접근 처리하기 위한 SDK 및 예제 코드  
+HNN Project의 AWS S3 to Azure Blob으로 이전을 위한 과정의 일부로 Azure Blob Storage를 node 등의 언어를 이용해 접근하는 과정 튜토리얼 등 제공.  
+Java 코드의 경우 @zzz2613 님의 지원으로 Guide 제공 중.  
 
 ## Azure HDInsight Data & Hive 스크립트 - 로그 분석
 hackfest간 HDInsight 검토를 위한 테스트 데이터 및 Hive 쿼리 참조  

@@ -1,7 +1,7 @@
 // 패키지 import 수행
 var azure = require('azure-storage');
 
-var blobService = azure.createBlobService('dwazurecampstor09', 'accountkey');
+var blobService = azure.createBlobService('accountname', 'accountkey');
 
 // blob 컨테이너 생성, Access Level은 blob
 blobService.createContainerIfNotExists('nodecontainer', {
