@@ -4,7 +4,7 @@ var azure = require('azure-storage');
 // RowKey를 unique하게 생성하기 위한 uuid 생성 패키지 import
 var uuid = require('node-uuid');		// 추가 https://github.com/broofa/node-uuid
 
-var tableService = azure.createTableService('<저장소계정>', '<어카운트키>');
+var tableService = azure.createTableService('<저장소계정>', '<저장소키>');
 
 var entGen = azure.TableUtilities.entityGenerator;
 
