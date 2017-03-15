@@ -138,5 +138,5 @@ Various other Hadoop analysis scenarios can be derived
 
 Scenarios that utilize various logs can be used to store and analyze by Hadoop - Big data  
 
-[hdinsight example data location](https://github.com/hnn-project/azure-content/data/)  
+[hdinsight example data location](https://github.com/hnn-project/azure-content/tree/master/data)  
 
