@@ -1,49 +1,42 @@
 # Azure HNN project content repo
-이 repo는 HNN project hackfest를 위한 content 프로젝트  
+This repository built for HNN hackfest HDInsight and node.js storage code  
 
-## Azure storage SDK 코드
-Hackfest에 필요한 storage에 접근 처리하기 위한 SDK 및 예제 코드  
-HNN Project의 AWS S3 to Azure Blob으로 이전을 위한 과정의 일부로 Azure Blob Storage를 node 등의 언어를 이용해 접근하는 과정 튜토리얼 등 제공.  
-Java 코드의 경우 @zzz2613 님의 지원으로 Guide 제공 중.  
+## Azure storage SDK code
+As part of the process HNN Project to AWS S3 to Azure Blob, we provide a sampe code - how to access Azure Blob Storage using a node.js. In case of Java code, guide is provided with support of @zzz2613  
 
-## Azure HDInsight Data & Hive 스크립트 - 로그 분석
-hackfest간 HDInsight 검토를 위한 테스트 데이터 및 Hive 쿼리 참조  
-적재되는 NoSQL기반 로그 데이터를 Big-data Hadoop을 활용해 분석  
+[Azure Storage sample code ofr node.js and etc.](https://github.com/hnn-project/azure-content/tree/master/demo)
 
-**모바일 게임의 스테이지 레벨(난이도) 디자인 분석**  
-- 목표정의 : 30여개의 스테이지가 존재하는 캐주얼 게임. 스테이지별로 난이도를 적절히 유지하기 위해, 해당 스테이지별로 클리어에 소요되는 시간 등을 기록해 스테이지 난이도를 조절하는데 사용하기 희망. 이를 위해 Closed Beta 서비스를 7일간 진행했고, 7일간 수집된 로그에서 스테이지별 난이도 분석을 희망  
+### HDInsight - Preprocessing log data using Hadoop big data  
+For simple data type conversion, the JSON type log data loaded in basic S3 can be easily converted into CSV type after deserializing in Azure function app. However, the log size is too large to preprocess and to become difficult log data type conversion, and it may be necessary to obtain insight from the log data for management and monitoring. To do this, we briefly performed the process of analyzing data using HDInsight – Hadoop during the Hackfest.  
 
-- 기본정보 : 게임의 스테이지 정보는 Member : MemberGameInfoStage 테이블에 one to many relationship으로 정의되어 있음. 이 정보는 RDBMS이기 때문에 state 정보만을 저장해 log성으로 남기지는 않음.  
+- Deploying HDInsight and understand how Hadoop services work  
+- Performing a Hive query on the management portal by using Ambari  
+- Assuming that the entire workflow is done via the Azure Data Factory (Did not review on hackfest)  
+- CSV file data is about 10,000 rows  
+- Assuming that there are about 30 real estate areas, it is assumed that the analysis of how many users stay for the longest  
 
-- 일별 적재되는 로그 데이터에서 식별자를 이용해 Hadoop에서 Hive를 수행하면 원하는 스테이지별 클리어 소요 시간을 계산 가능  
+HDInsight's HDFS is compatible with Azure Blob Storage.  
+Copy the blob using [Storage Explorer](http://storageexplorer.com). Copy the blobs to the data subdirectory of the container specified at installation. These blobs are mapped to "wasbs:///example/data/"  
 
-- HDInsight의 HDFS는 Blob Storage와 호환됨  
+![HDInsigt Cluster Manager ](images/13-0.png)  
 
-- Blob 처리를 위한 [Storage Explorer](http://storageexplorer.com/) 개발 도구에서 blob 을 로드. blob들은 *"wasbs:///example/data/"* 하위로 매핑됨  
+- Structure of loaded csv file  
 
-- ![Storage Explorer 개발 도구에서 blob 을 로드](demo/hdinsight/images/13-0.png)
-Storage Explorer 개발 도구에서 blob 을 로드하는 화면
+    PartitionKey|RowKey|Timestamp|Date|Level|Logger|Message
+    ---|---|---|---|---|---|---|
+    BECA21F0-8B5E-4877-A18A-FD2A4B04322D|4DC0C4A6-893C-4246-AF80-B990EDD10C54|0.011269676|2016-09-10T04:29:50.828Z|stage5|CBComInsMemberGameInfoStages|9
+    6EDC9E0F-5E7E-4A04-B420-5F3091052CE7|819F7AC7-61E9-40C8-9904-B53B1008311E|0.011269676|2016-06-13T17:40:10.131Z|stage21|CBComInsMemberGameInfoStages|14
+    9F86454F-4E96-4CAD-A0AE-05DED005774F|766461D9-5FE6-4135-8FB3-15AACE24C4A8|0.011269676|2016-10-18T08:06:05.589Z|stage15|CBComInsMemberGameInfoStages|7
+    920E72B5-377C-4590-82D5-387ED86EF757|3AB215E0-AAE7-4E69-AF8B-825FADBAF756|0.011269676|2016-06-13T17:38:02.779Z|stage14|CBComInsMemberGameInfoStages|1
+    ...
+- Daily, log file include about 10,000 pieces of data, the real estate area from the client and the time information of the stay  
+- Processes taking time (minutes) of message for items  
+- Perform HDInsigt Cluster Manager to perform Hive queries  
+- ![HDInsigt Cluster Manager](images/13-1.png)  
+- Prepare Hive query execution  
+- ![Hive query exection](images/13-3.png)  
+- Load csv files as External Table from Hive  
 
-- 로드된 csv 파일의 구조  
-
-	PartitionKey|RowKey|Timestamp|Date|Level|Logger|Message
----|---|---|---|---|---|---|
-BECA21F0-8B5E-4877-A18A-FD2A4B04322D|4DC0C4A6-893C-4246-AF80-B990EDD10C54|0.011269676|2016-09-10T04:29:50.828Z|stage5|CBComInsMemberGameInfoStages|9
-6EDC9E0F-5E7E-4A04-B420-5F3091052CE7|819F7AC7-61E9-40C8-9904-B53B1008311E|0.011269676|2016-06-13T17:40:10.131Z|stage21|CBComInsMemberGameInfoStages|14
-9F86454F-4E96-4CAD-A0AE-05DED005774F|766461D9-5FE6-4135-8FB3-15AACE24C4A8|0.011269676|2016-10-18T08:06:05.589Z|stage15|CBComInsMemberGameInfoStages|7
-920E72B5-377C-4590-82D5-387ED86EF757|3AB215E0-AAE7-4E69-AF8B-825FADBAF756|0.011269676|2016-06-13T17:38:02.779Z|stage14|CBComInsMemberGameInfoStages|1
-	일별, 약 1만건 정도의 데이터는 클라이언트에서 들어온 스테이지 및 클리어 소요 시간 정보를 로그로 적재  
-- 항목들을에 대해 message의 소요 시간(분)을 처리  
-
-- Hive 쿼리를 수행하기 위해 HDInsigt Cluster Manager 수행  
-
-- ![HDInsigt Cluster Manager ](demo/hdinsight/images/13-1.png)  
-
-- Hive 쿼리 수행을 준비  
-
-- ![Hive 쿼리 수행](demo/hdinsight/images/13-3.png)  
-
-- csv파일들을 Hive에서 External Table로 load 작업 수행  
     ```
     set hive.execution.engine=tez;
     DROP TABLE cloudbreadlog;
@@ -68,13 +61,16 @@ BECA21F0-8B5E-4877-A18A-FD2A4B04322D|4DC0C4A6-893C-4246-AF80-B990EDD10C54|0.0112
     --	AND INPUT__FILE__NAME LIKE '%.csv' 
     --order by level asc;
     ```  
-	Hive 쿼리를 수행
-- Hive의 External Table로 로드 되었는지 count 체크
+	Execure Hive query  
+
+- Check whether the external table is loaded by Hive query  
+
     ```
     SELECT count(*) FROM cloudbreadlog;
     ```
 
-- 빠른 처리를 위해 Internal Table ORC(Optimized Row Columnar) 테이블로 로드
+- Load into Internal table ORC(Optimized Row Columnar) for fast processing  
+
     ```
     set hive.execution.engine=tez;
     CREATE TABLE IF NOT EXISTS CloudBreadStageTime(
@@ -100,7 +96,8 @@ BECA21F0-8B5E-4877-A18A-FD2A4B04322D|4DC0C4A6-893C-4246-AF80-B990EDD10C54|0.0112
         cloudbreadlog;
     ```
 
-- ORC 테이블에서 최종 조회 쿼리 수행
+- Execute final select query on ORC table  
+
     ```
     select 
         level, 
@@ -112,10 +109,10 @@ BECA21F0-8B5E-4877-A18A-FD2A4B04322D|4DC0C4A6-893C-4246-AF80-B990EDD10C54|0.0112
     order by level asc;
     ```
 
-- 수행 결과로 stage별로 수행된 평균 시간과 총합 시간을 조회 가능
-이렇게 Hive 쿼리 결과를 얻을 수 있음  
+- Average stay time and total stay time performed by region as a result of execution  
+You can get Hive query results like this.  
 
-    level|stage_play_avg_min|stage_play_sum_min
+	level|stage_play_avg_min|stage_play_sum_min
     ---|---|---|
     stage0|7.032447466|22757
     stage1|6.923216995|22812
@@ -131,13 +128,15 @@ BECA21F0-8B5E-4877-A18A-FD2A4B04322D|4DC0C4A6-893C-4246-AF80-B990EDD10C54|0.0112
     stage19|7.13037037|24065
     stage2|7.110673135|23451
     ...
+- Easily visualize and publish this Hadoop analysis result to the Web using Power BI.  
 
-- 이 Hadoop 분석 결과를 Power BI를 이용해 손쉬운 시각화 및 Web에 배포가 가능  
-- ![Power BI 데이터 시각화](demo/hdinsight/images/27-1.png)  
+- ![Power BI data visualization](images/27-1.png)  
 
-이 외에도 다양한 Hadoop 분석 시나리오를 도출 가능  
-- 주요 부동산 매물들의 조회량 변화 추이  
-- Feature별 주요한 group된 부동산 정보  
+Various other Hadoop analysis scenarios can be derived  
+- Changes in the volume of inquiries of major real estate properties  
+- Grouped property information by feature  
 
-등의 다양한 log를 활용한 시나리오를 저장소와 Hadoop - Big data 분석 가능  
+Scenarios that utilize various logs can be used to store and analyze by Hadoop - Big data  
+
+[hdinsight example data location](https://github.com/hnn-project/azure-content/data/)  
 
